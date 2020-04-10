@@ -1,5 +1,5 @@
 <?php include_once ("lib/header.php");
-    if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin'])) {
+    if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && ($_SESSION['designation'] == 'Staff' || $_SESSION['designation'] == 'Student')) {
         //redirect to dashboard
         header("location: dashboard.php");
     }
