@@ -56,7 +56,7 @@ if ($errorCount > 0) {
     }
     $error_message .= " in your form submission";
     $_SESSION["error"] = $error_message;
-    header("location: ../register.php");
+    header("location: ../register_admin.php");
 
 } else {
 
@@ -83,7 +83,7 @@ if ($errorCount > 0) {
         
         if($currentUser == $email . ".json") {
             $_SESSION["error"] = "Registration failed, User already exists";
-            header("location: ../register.php");
+            header("location: ../dashboard.php");
             die();
         }
     }
@@ -91,6 +91,5 @@ if ($errorCount > 0) {
     file_put_contents("../db/users/". $email .".json", json_encode($userObject));
     $_SESSION['message'] = "New User has been created";
     header("location: ../dashboard.php");
-    exit();
 }
 ?>

@@ -67,7 +67,7 @@ if ($errorCount > 0) {
                 $_SESSION["last_login"] = $last_login;
                 //redirect to dashboard according to the user designation
                 if ($userObject->designation == "Staff") {
-                    header("location: ../dashboard_staffs.php");
+                    header("location: ../dashboard_staff.php");
                 } elseif ($userObject->designation == "Student") {
                     header("location: ../dashboard_students.php");
                 } else {
