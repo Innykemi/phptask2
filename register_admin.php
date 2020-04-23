@@ -1,5 +1,8 @@
 <?php 
 include_once ("lib/header.php");
+    if (isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Super Admin' || empty($_SESSION['loggedin'])) {
+        header("location: login.php");
+    }
     include_once ("lib/menu.php");
 ?>
     <main role="main" class="container">
@@ -82,13 +85,44 @@ include_once ("lib/header.php");
                 </div>
                 <div class="form-item">
                     <label for="department">Department</label>
-                    <input 
-                    <?php
-                        if (isset($_SESSION['department']) && !empty($_SESSION['department'])) {
-                            echo "value='" . $_SESSION['department'] ."'";
-                        }
-                    ?>
-                    type="text" name="department" class="form-control" placeholder="Department">
+                    <select name="department" class="form-control">
+                        <option value="">Select One</option>
+                        <option 
+                        <?php
+                            if (isset($_SESSION['department']) && !empty($_SESSION['department']) && $_SESSION['department'] == 'Art') {
+                                echo 'selected';
+                            }
+                        ?>
+                        >Art</option>
+                        <option 
+                        <?php
+                            if (isset($_SESSION['department']) && !empty($_SESSION['department']) && $_SESSION['department'] == 'Science') {
+                                echo 'selected';
+                            }
+                        ?>
+                        >Science</option>
+                        <option 
+                        <?php
+                            if (isset($_SESSION['department']) && !empty($_SESSION['department']) && $_SESSION['department'] == 'Commercial') {
+                                echo 'selected';
+                            }
+                        ?>
+                        >Commercial</option>
+                        <option 
+                        <?php
+                            if (isset($_SESSION['department']) && !empty($_SESSION['department']) && $_SESSION['department'] == 'Health') {
+                                echo 'selected';
+                            }
+                        ?>
+                        >Health</option>
+                        <option 
+                        <?php
+                            if (isset($_SESSION['department']) && !empty($_SESSION['department']) && $_SESSION['department'] == 'Non Teaching Staff') {
+                                echo 'selected';
+                            }
+                        ?>
+                        >Non Teaching Staff</option>
+                    </select>
                 </div>
                 <button type="submit">Create Account</button>
             </form>
