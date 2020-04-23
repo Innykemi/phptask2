@@ -1,29 +1,37 @@
 <?php include ("lib/header.php");
-    if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin'])) {
-        //redirect to dashboard
+    //redirect to users dashboard with regard to designation
+    if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Student'){
+        header("location: dashboard_students.php");
+    } elseif (isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Staff') {
+        header("location: dashboard_staff.php");
+    } elseif (isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Super Admin') {
         header("location: dashboard.php");
     }
     include ("lib/menu.php");
 ?>
     <main role="main" class="container">
         <div class="my-5 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
-        <?php
-            if (isset($_SESSION['message']) && !empty($_SESSION['message'])){
-                echo "<p style='color:green;'>" . $_SESSION['message'] . "</p>";
-                session_destroy();
-            }
-        ?>
+            <?php
+                if (isset($_SESSION['message']) && !empty($_SESSION['message'])){
+                    echo 
+                        "<div class='alert alert-success' role='alert'>" 
+                            . $_SESSION["message"] .
+                        "</div>";
+                    session_destroy();
+                }
+            ?>
             <h2>Login</h2>
             <form action="process/processlogin.php" method="post">
-                <p>
-                    <?php
-                        if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
-                            echo "<span style='color:red;'>" . $_SESSION['error'] . "</span>";
-                            echo "<br/><span style='color:red;'>" . $_SESSION["emailErr"] . "</span>";
-                            session_destroy();
-                        }
-                    ?>
-                </p>
+                <?php
+                    if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
+                        echo 
+                            "<div class='alert alert-danger' role='alert'>" 
+                                . $_SESSION['error'] . "<br/>"
+                                . $_SESSION["emailErr"] .
+                            "</div>";
+                        session_destroy();
+                    }
+                ?>
                 <div class="form-item">
                     <label for="email">Email</label>
                     <input 
