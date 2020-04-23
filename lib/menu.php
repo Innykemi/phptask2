@@ -18,11 +18,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="register.php">Register</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="forgot.php">Forgot Password</a>
+                </li>
                 <?php } else { ?>
                 <li class="nav-item">
                 <?php 
                     if ($_SESSION["designation"] == "Staff") {
-                        echo '<a class="nav-link" href="dashboard_staffs.php">';
+                        echo '<a class="nav-link" href="dashboard_staff.php">';
                     } elseif ($_SESSION["designation"] == "Student") {
                         echo '<a class="nav-link" href="dashboard_students.php">';
                     } else {
@@ -36,6 +39,9 @@
                     <a class="nav-link" href="register_admin.php">Register New User</a>
                 </li>
                 <?php } ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="reset.php">Reset Password</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>
                 </li>
