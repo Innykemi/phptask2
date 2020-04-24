@@ -10,16 +10,6 @@ include ("lib/menu.php");
     <main role="main">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <?php
-                        if (isset($_SESSION['message']) && !empty($_SESSION['message'])){
-                            echo 
-                                "<div class='alert alert-success' role='alert'>" 
-                                    . $_SESSION["message"] .
-                                "</div>";
-                        }
-                    ?>
-                </div>
                 <div class="col-md-12 mt-5 row">
                     <div class="col-md-5" col-12>
                         <h3 class="purple">Welcome <?php echo $_SESSION['full_name'];?></h3>
