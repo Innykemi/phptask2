@@ -1,10 +1,10 @@
 <?php include ("lib/header.php");
     include ("lib/menu.php");
-    require_once('functions/alert.php');
-    require_once('functions/user.php');
-    if(!is_user_loggedIn() && !is_token_set()){
-        $_SESSION["error"] = "You are not authorized to view that page";
-        header("Location: login.php");
+
+    if (!isset($_SESSION['loggedin']) && !isset($_GET['token']) && !isset($_SESSION['token'])){
+        $_SESSION["error"] = "You are not authorized to view this page";
+        $_SESSION["emailErr"] = "";
+        header("location: login.php");
     }
 ?>
     <main role="main" class="container">
@@ -12,26 +12,34 @@
             <h2>Reset Password</h2>
             <p>Reset Password associated with your account : [email]</p> 
             <form action="process/processreset.php" method="post">
-
-                <?php  print_alert(); ?>
-
-                <?php if(!is_user_loggedIn()) { ?>
-                    <input
-                        <?php              
-                            if(is_token_set_in_session()){
-                                echo "value='" . $_SESSION['token'] . "'";                                                             
-                            }else{
-                                echo "value='" . $_GET['token'] . "'";
-                            }             
-                        ?>
-                    type="hidden" name="token"  />
+                <?php
+                    if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
+                        echo 
+                            "<div class='alert alert-danger' role='alert'>" 
+                                . $_SESSION['error'] . "<br/>"
+                                . $_SESSION["emailErr"] .
+                            "</div>";
+                        unset($_SESSION['error']);
+                        unset($_SESSION['emailErr']);
+                    }
+                ?>
+                <?php if (!$_SESSION['loggedin']) { ?>
+                <input 
+                <?php              
+                    if(isset($_SESSION['token'])){
+                        echo "value='" . $_SESSION['token'] . "'";                                                             
+                    } else{
+                        echo "value='" . $_GET['token'] . "'";
+                    }             
+                ?>
+                type="hidden" name="token"/>
                 <?php } ?>
                 <div class="form-item">
                     <label for="email">Email</label>
-                    <input 
+                    <input
                     <?php
                         if (isset($_SESSION['email']) && !empty($_SESSION['email'])) {
-                            echo "value='" . $_SESSION['email'] ."'";
+                           echo "value='" . $_SESSION['email'] ."'";
                         }
                     ?>
                     type="email" name="email" class="form-control" placeholder="Email">
@@ -40,7 +48,7 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control" placeholder="Password">
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Reset Password</button>
             </form>        
         </div>
     </main>

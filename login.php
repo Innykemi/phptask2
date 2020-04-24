@@ -17,7 +17,7 @@
                         "<div class='alert alert-success' role='alert'>" 
                             . $_SESSION["message"] .
                         "</div>";
-                    session_destroy();
+                    unset($_SESSION['message']);
                 }
             ?>
             <h2>Login</h2>
@@ -29,7 +29,8 @@
                                 . $_SESSION['error'] . "<br/>"
                                 . $_SESSION["emailErr"] .
                             "</div>";
-                        session_destroy();
+                        unset($_SESSION['error']);
+                        unset($_SESSION['emailErr']);
                     }
                 ?>
                 <div class="form-item">

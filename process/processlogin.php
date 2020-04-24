@@ -61,6 +61,7 @@ if ($errorCount > 0) {
             if($passwordFromDB == $passwordFromUser) {
                 $_SESSION["loggedin"] = $userObject->id;
                 $_SESSION["full_name"] = $userObject->full_name;
+                $_SESSION["email"] = $userObject->email;
                 $_SESSION["designation"] = $userObject->designation;
                 $_SESSION["department"] = $userObject->department;
                 $_SESSION["registration_date"] = $userObject->registration_date;
