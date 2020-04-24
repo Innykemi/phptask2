@@ -1,24 +1,14 @@
 <?php include_once('alert.php');
 include_once('scandir.php');
 
+$_SESSION['loggedIn'] = "";
 function is_user_loggedIn(){
 
     if($_SESSION['loggedIn'] && !empty($_SESSION['loggedIn'])) {
         return true;
     }
-
     return false;
 }
-
-// function is_right_user_loggedIn(){
-//     if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Student'){
-//         return true;
-//     } elseif (isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Staff') {
-//         return true;
-//     } elseif (isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Super Admin') {
-//         return true;
-//     }
-// }
 
 function is_token_set(){
 
@@ -28,7 +18,7 @@ function is_token_set(){
 
 function is_token_set_in_session(){
 
-    return isset($_SESSION['token']);
+    return  isset($_SESSION['token']);
 
 }
 
@@ -45,7 +35,7 @@ function find_user($email = ""){
         die();
     }
 
-    $allUsers = customScandir("../db/users/"); //return @array (2 filled)
+    $allUsers = scandir("../db/users/"); //return @array (2 filled)
     $countAllUsers = count($allUsers);
 
     for ($counter = 0; $counter < $countAllUsers ; $counter++) {
