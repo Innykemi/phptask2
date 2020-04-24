@@ -5,12 +5,12 @@ $errorCount = 0;
 
 if (!$_SESSION['loggedin']) {
     $token = $_POST['token'] != "" ? $_POST['token'] :  $errorCount++;
-    
+    $_SESSION['token'] = $token;
 }
 $email = $_POST['email'] != "" ? $_POST['email'] :  $errorCount++;
 $password = $_POST['password'] != "" ? $_POST['password'] :  $errorCount++;
 
-$_SESSION['token'] = $token;
+
 $_SESSION['email'] = $email;
 
 function test_input($data) {
