@@ -1,4 +1,7 @@
 <?php session_start();
+require_once('../functions/alert.php');
+require_once('../functions/redirect.php');
+require_once('../functions/user.php');
 
 $errorCount = 0;
 
@@ -34,30 +37,27 @@ if ($errorCount > 0) {
     }
 
     // Display error message
-    $error_message = "You have " . $errorCount . " error";
-    if ($errorCount > 1){
-        $error_message .= "s";
+    $session_error = "You have " . $errorCount . " error";
+    if($errorCount > 1) {        
+        $session_error .= "s";
     }
-    $error_message .= " in your form submission";
-    $_SESSION["error"] = $error_message;
-    header("location: ../login.php");
+    $session_error .=   " in your form submission";
+    
+    set_alert('error',$session_error);
+    redirect_to("../login.php");
 
 } else {
-    //count all users
-    $allUsers = scandir("../db/users/");
-    $countUsers = count($allUsers);
- 
-     //check if the user exists
-    for ($counter = 0; $counter < $countUsers; $counter++) {
-        $currentUser = $allUsers[$counter];
+    //check if the user exists
+    $currentUser = find_user($email);
 
-        if($currentUser == $email . ".json") {
-            //Check Password
-            $userString = file_get_contents("../db/users/".$currentUser);
+        if($currentUser) {
+            //Check user password
+            $userString = file_get_contents("../db/users/".$currentUser->email . ".json");
             $userObject = json_decode($userString);
             $passwordFromDB = $userObject->password;
             
             $passwordFromUser = password_verify($password, $passwordFromDB);
+            
             if($passwordFromDB == $passwordFromUser) {
                 $_SESSION["loggedin"] = $userObject->id;
                 $_SESSION["full_name"] = $userObject->full_name;
@@ -65,19 +65,19 @@ if ($errorCount > 0) {
                 $_SESSION["department"] = $userObject->department;
                 $_SESSION["registration_date"] = $userObject->registration_date;
                 $_SESSION["last_login"] = $last_login;
+
                 //redirect to dashboard according to the user designation
                 if ($userObject->designation == "Staff") {
-                    header("location: ../dashboard_staff.php");
+                    redirect_to("../dashboard_staff.php");
                 } elseif ($userObject->designation == "Student") {
-                    header("location: ../dashboard_students.php");
+                    redirect_to("../dashboard_students.php");
                 } else {
-                    header("location: ../dashboard.php");
+                    redirect_to("../dashboard.php");
                 }
                 die();
             }
         }
-    }
-    $_SESSION["error"] = "Invalid Email or Password";
-    header("location: ../login.php");
+    set_alert('error',"Invalid Email or Password");
+    redirect_to("../login.php");
     die();
 }

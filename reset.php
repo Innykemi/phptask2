@@ -1,34 +1,31 @@
 <?php include ("lib/header.php");
-    //redirect to users dashboard with regard to designation
-    if(isset($_SESSION['loggedin'])){
-        //redirect to dashboard
-        header("location: login.php");
-    }
     include ("lib/menu.php");
+    require_once('functions/alert.php');
+    require_once('functions/user.php');
+    if(!is_user_loggedIn() && !is_token_set()){
+        $_SESSION["error"] = "You are not authorized to view that page";
+        header("Location: login.php");
+    }
 ?>
     <main role="main" class="container">
         <div class="my-5 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
-            <?php
-                if (isset($_SESSION['message']) && !empty($_SESSION['message'])){
-                    echo 
-                        "<div class='alert alert-success' role='alert'>" 
-                            . $_SESSION["message"] .
-                        "</div>";
-                    session_destroy();
-                }
-            ?>
             <h2>Reset Password</h2>
-            <form action="process/processlogin.php" method="post">
-                <?php
-                    if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
-                        echo 
-                            "<div class='alert alert-danger' role='alert'>" 
-                                . $_SESSION['error'] . "<br/>"
-                                . $_SESSION["emailErr"] .
-                            "</div>";
-                        session_destroy();
-                    }
-                ?>
+            <p>Reset Password associated with your account : [email]</p> 
+            <form action="process/processreset.php" method="post">
+
+                <?php  print_alert(); ?>
+
+                <?php if(!is_user_loggedIn()) { ?>
+                    <input
+                        <?php              
+                            if(is_token_set_in_session()){
+                                echo "value='" . $_SESSION['token'] . "'";                                                             
+                            }else{
+                                echo "value='" . $_GET['token'] . "'";
+                            }             
+                        ?>
+                    type="hidden" name="token"  />
+                <?php } ?>
                 <div class="form-item">
                     <label for="email">Email</label>
                     <input 

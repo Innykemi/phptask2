@@ -1,4 +1,7 @@
 <?php session_start();
+require_once('../functions/alert.php');
+require_once('../functions/redirect.php');
+require_once('../functions/user.php');
 
 $errorCount = 0;
 
@@ -57,20 +60,18 @@ if ($errorCount > 0) {
     }
 
     // Display error message
-    $error_message = "You have " . $errorCount . " error";
-    if ($errorCount > 1){
-        $error_message .= "s";
+    $session_error = "You have " . $errorCount . " error";
+    if($errorCount > 1) {        
+        $session_error .= "s";
     }
-    $error_message .= " in your form submission";
-    $_SESSION["error"] = $error_message;
-    header("location: ../register.php");
+    $session_error .=   " in your form submission";
+    set_alert('error',$session_error);
+    redirect_to("../register.php");
 
 } else {
 
     //count all users
-    $allUsers = scandir("../db/users/");
-    $countUsers = count($allUsers);
-    $newUserID = ($countUsers-2) ;
+    $newUserID = ($countUsers+1) ;
 
     //declare data to be submitted to database
     $userObject = [
@@ -85,20 +86,19 @@ if ($errorCount > 0) {
     ];
 
     //check if the user exists
-    for ($counter = 0; $counter < $countUsers; $counter++) {
-        $currentUser = $allUsers[$counter];
+    $userExists = find_user($email);
         
-        if($currentUser == $email . ".json") {
-            $_SESSION["error"] = "Registration failed, User already exists";
-            header("location: ../register.php");
+        if($userExists) {
+            set_alert('error',"Registration failed, User already exists");
+            redirect_to("../register.php");
             die();
         }
-    }
 
     // Save user details to database
-    file_put_contents("../db/users/". $email .".json", json_encode($userObject));
-    $_SESSION['message'] = "Registration complete. You can login now";
-    header("location: ../login.php");
+    save_user($userObject);
+    
+    set_alert('message',"Registration Successful, you can now login " . $full_name);
+    redirect_to("../login.php");
     
 }
 ?>

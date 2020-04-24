@@ -1,4 +1,5 @@
 <?php session_start();
+require_once('../functions/scandir.php');
 
 $errorCount = 0;
 
@@ -61,9 +62,9 @@ if ($errorCount > 0) {
 } else {
 
     //count all users
-    $allUsers = scandir("../db/users/");
+    $allUsers = customScandir("../db/users/");
     $countUsers = count($allUsers);
-    $newUserID = ($countUsers-2) ;
+    $newUserID = ($countUsers+1) ;
 
     //declare data to be submitted to database
     $userObject = [
@@ -83,7 +84,7 @@ if ($errorCount > 0) {
         
         if($currentUser == $email . ".json") {
             $_SESSION["error"] = "Registration failed, User already exists";
-            header("location: ../dashboard.php");
+            header("location: ../register_admin.php");
             die();
         }
     }

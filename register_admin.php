@@ -12,10 +12,13 @@ include_once ("lib/header.php");
                 <p>
                     <?php
                         if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
-                            echo "<span style='color:red;'>" . $_SESSION['error'] . "</span>";
-                            echo "<br/><span style='color:red;'>" . $_SESSION["nameErr"] . "</span>";
-                            echo "<br/><span style='color:red;'>" . $_SESSION["emailErr"] . "</span>";
-                            session_destroy();
+                            echo 
+                                "<div class='alert alert-danger' role='alert'>" 
+                                    . $_SESSION['error'] . "<br/>"
+                                    . $_SESSION["nameErr"] . "<br/>"
+                                    . $_SESSION["emailErr"] .
+                                "</div>";
+                            //session_destroy();
                         }
                     ?>
                 </p>

@@ -1,5 +1,9 @@
 <?php session_start();
 
+require_once('../functions/user.php');
+require_once('../functions/alert.php');
+require_once('../functions/redirect.php');
+
 $errorCount = 0;
 
 if(!is_user_loggedIn()){
@@ -43,12 +47,12 @@ if($errorCount > 0){
             $message = "Your account on snh has just been updated, your password has changed. if you did not initiate the password change, please visit snh.org and reset your password immediatly";
             send_mail($subject,$message,$email);
             
-            redirect_to("login.php");
+            redirect_to("../login.php");
             return;
         
         }
     
     }
     set_alert('error',"Password Reset Failed, token/email invalid or expired");
-    redirect_to("login.php");
+    redirect_to("../login.php");
 }

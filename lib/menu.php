@@ -40,7 +40,7 @@
                 </li>
                 <?php } ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="resetpassword.php">Reset Password</a>
+                    <a class="nav-link" href="reset.php">Reset Password</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>

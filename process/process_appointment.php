@@ -1,6 +1,7 @@
 <?php session_start();
 
-include("../functions/scandir.php");
+require_once('../functions/alert.php');
+require_once('../functions/scandir.php');
 
 $errorCount = 0;
 
@@ -85,7 +86,7 @@ if ($errorCount > 0) {
     // Save appointment details to database
     file_put_contents("../db/appointments/". $student_name . $appointment_date .".json", json_encode($appointmentObject));
     $_SESSION['message'] = "Appointment booking complete.";
-    header("location: ../dashboard_students.php");
+    redirect_to("../dashboard_students.php");
     
 }
 ?>
