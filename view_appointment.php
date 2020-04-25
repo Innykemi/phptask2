@@ -8,11 +8,11 @@
     <main role="main">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-9 offset-md-1 col-lg-9 offset-lg-1 text-center justify-content-center mt-5">
+                <div class="col-12 col-md-8 offset-md-2 col-lg-8 offset-lg-2 text-center justify-content-center mt-5">
 
-                <?php if($departmentFromDB == $_SESSION['department']) { ?>
+                <?php if($appointmentList != null) { ?>
                     <h1>Appointments</h1>
-                    <table class="table table-inverse table-responsive staff text-left">
+                    <table class="table table-inverse table-responsive student text-left">
                         <thead>
                             <tr>
                                 <th>Student Name</th>

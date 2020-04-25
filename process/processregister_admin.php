@@ -1,5 +1,8 @@
 <?php session_start();
 require_once('../functions/scandir.php');
+require_once('../functions/alert.php');
+require_once('../functions/redirect.php');
+require_once('../functions/user.php');
 
 $errorCount = 0;
 
@@ -51,13 +54,13 @@ if ($errorCount > 0) {
     }
 
     // Display error message
-    $error_message = "You have " . $errorCount . " error";
-    if ($errorCount > 1){
-        $error_message .= "s";
+    $session_error = "You have " . $errorCount . " error";
+    if($errorCount > 1) {        
+        $session_error .= "s";
     }
-    $error_message .= " in your form submission";
-    $_SESSION["error"] = $error_message;
-    header("location: ../register_admin.php");
+    $session_error .=   " in your form submission";
+    set_alert('error',$session_error);
+    redirect_to("../register_admin.php");
 
 } else {
 
@@ -83,14 +86,14 @@ if ($errorCount > 0) {
         $currentUser = $allUsers[$counter];
         
         if($currentUser == $email . ".json") {
-            $_SESSION["error"] = "Registration failed, User already exists";
-            header("location: ../register_admin.php");
+            set_alert('error',"Registration failed, User already exists");
+            redirect_to("../register_admin.php");
             die();
         }
     }
     // Save user details to database
     file_put_contents("../db/users/". $email .".json", json_encode($userObject));
-    $_SESSION['message'] = "New User has been created";
-    header("location: ../dashboard.php");
+    set_alert('message',"New User has been created");
+    redirect_to("../dashboard.php");
 }
 ?>

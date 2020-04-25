@@ -2,8 +2,9 @@
     include ("lib/menu.php");
     require_once('functions/user.php');
     require_once('functions/alert.php');
+    require_once('functions/redirect.php');
     
-    if(!is_user_loggedIn() && !is_token_set()){
+    if(!isset($_SESSION['loggedin']) && !isset($_GET['token']) && !isset($_SESSION['token'])){
         $_SESSION["error"] = "You are not authorized to view that page";
         $_SESSION["emailErr"] = "";
         header("Location: login.php");

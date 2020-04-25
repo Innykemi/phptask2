@@ -4,6 +4,8 @@ include_once ("lib/header.php");
         header("location: login.php");
     }
     include_once ("lib/menu.php");
+    require_once('functions/alert.php');
+    require_once('functions/redirect.php');
 ?>
     <main role="main" class="container">
         <div class="my-4 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
@@ -11,15 +13,8 @@ include_once ("lib/header.php");
             <form action="process/processregister_admin.php" method="post">
                 <p>
                     <?php
-                        if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
-                            echo 
-                                "<div class='alert alert-danger' role='alert'>" 
-                                    . $_SESSION['error'] . "<br/>"
-                                    . $_SESSION["nameErr"] . "<br/>"
-                                    . $_SESSION["emailErr"] .
-                                "</div>";
-                            //session_destroy();
-                        }
+                        print_alert();
+                        //unset_session();
                     ?>
                 </p>
                 <div class="form-item">

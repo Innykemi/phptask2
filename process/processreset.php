@@ -1,15 +1,17 @@
 <?php session_start();
 include("../functions/scandir.php");
+require_once('../functions/user.php');
+require_once('../functions/alert.php');
+require_once('../functions/redirect.php');
 
 $errorCount = 0;
 
-if (!$_SESSION['loggedin']) {
+if (!is_user_loggedIn()) {
     $token = $_POST['token'] != "" ? $_POST['token'] :  $errorCount++;
     $_SESSION['token'] = $token;
 }
 $email = $_POST['email'] != "" ? $_POST['email'] :  $errorCount++;
 $password = $_POST['password'] != "" ? $_POST['password'] :  $errorCount++;
-
 
 $_SESSION['email'] = $email;
 
@@ -38,17 +40,16 @@ if($errorCount > 0){
     }
 
     // Display error message
-    $error_message = "You have " . $errorCount . " error";
-    if ($errorCount > 1){
-        $error_message .= "s";
+    $session_error = "You have " . $errorCount . " error";
+    if($errorCount > 1) {        
+        $session_error .= "s";
     }
-    $error_message .= " in your form submission";
-    $_SESSION["error"] = $error_message;
-    header("location: ../reset.php?token=".$token);
+    $session_error .=   " in your form submission";
+    set_alert('error',$session_error);
+    redirect_to("../reset.php?token=".$token);
 
 } else {
 
-    //if($checkToken){
     $allUserTokens = customScandir("../db/tokens/");
     $countAllUserTokens = count($allUserTokens);
     
@@ -80,6 +81,7 @@ if($errorCount > 0){
                         $userObject->password = password_hash($password,PASSWORD_DEFAULT);
 
                         unlink("../db/users/".$currentUser); //user data deleted
+                        unlink("../db/tokens/".$currentUser); //user data deleted
                         file_put_contents("../db/users/". $email . ".json", json_encode($userObject));
 
                         //Inform user of password reset
@@ -92,17 +94,15 @@ if($errorCount > 0){
                         $try = mail($email,$subject,$message,$headers);
                         //end inform user of password reset
 
-                        $_SESSION["message"] = "Password Reset Successful, you can now login";
-                        header("location: ../login.php");
+                        set_alert('message',"Password Reset Successful, you can now login");
+                        redirect_to("../login.php");
                         die(); 
                     }
                 }
-            //die();
             }  
         } 
     }
     
-    //}
-    $_SESSION["error"] = "Password Reset Failed, token/email invalid or expired";
-    header("location: ../login.php");
+    set_alert('error', "Password Reset Failed, token/email invalid or expired");
+    redirect_to("../login.php");
 }

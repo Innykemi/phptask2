@@ -11,21 +11,15 @@ function is_user_loggedIn(){
 }
 
 function is_token_set(){
-
-    return is_token_set_in_get() || is_token_set_in_session();
-
+    return is_token_set_in_get() && is_token_set_in_session();
 }
 
 function is_token_set_in_session(){
-
-    return  isset($_SESSION['token']);
-
+    return isset($_SESSION['token']);
 }
 
 function is_token_set_in_get(){
-
     return isset($_GET['token']); 
-
 }
 
 function find_user($email = ""){
@@ -35,7 +29,7 @@ function find_user($email = ""){
         die();
     }
 
-    $allUsers = scandir("../db/users/"); //return @array (2 filled)
+    $allUsers = customScandir("../db/users/"); 
     $countAllUsers = count($allUsers);
 
     for ($counter = 0; $counter < $countAllUsers ; $counter++) {

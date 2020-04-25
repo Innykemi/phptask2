@@ -1,4 +1,5 @@
 <?php session_start();
+require_once('../functions/scandir.php');
 require_once('../functions/alert.php');
 require_once('../functions/redirect.php');
 require_once('../functions/user.php');
@@ -42,7 +43,6 @@ if ($errorCount > 0) {
         $session_error .= "s";
     }
     $session_error .=   " in your form submission";
-    
     set_alert('error',$session_error);
     redirect_to("../login.php");
 

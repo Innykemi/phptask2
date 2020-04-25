@@ -3,22 +3,18 @@
         //redirect to dashboard
         header("location: login.php");
     }
+    //session_destroy();
     include_once ("lib/menu.php");
+    require_once('functions/alert.php');
+    require_once('functions/redirect.php');
 ?>
     <main role="main" class="container">
         <div class="my-4 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
             <h2>Register</h2>
             <form action="process/processregister.php" method="post">
                 <?php
-                    if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
-                        echo 
-                            "<div class='alert alert-danger' role='alert'>" 
-                                . $_SESSION['error'] . "<br/>"
-                                . $_SESSION["nameErr"] . "<br/>"
-                                . $_SESSION["emailErr"] .
-                            "</div>";
-                        session_destroy();
-                    }
+                    print_alert();
+                    //unset_session();
                 ?>
                 <div class="form-item">
                     <label for="full_name">Full Name</label>

@@ -2,6 +2,7 @@
 
 require_once('../functions/alert.php');
 require_once('../functions/scandir.php');
+require_once('../functions/redirect.php');
 
 $errorCount = 0;
 
@@ -57,13 +58,13 @@ if ($errorCount > 0) {
     }
 
     // Display error message
-    $error_message = "You have " . $errorCount . " error";
-    if ($errorCount > 1){
-        $error_message .= "s";
+    $session_error = "You have " . $errorCount . " error";
+    if($errorCount > 1) {        
+        $session_error .= "s";
     }
-    $error_message .= " in your form submission";
-    $_SESSION["error"] = $error_message;
-    header("location: ../book_appointment.php");
+    $session_error .=   " in your form submission";
+    set_alert('error',$session_error);
+    redirect_to("../book_appointment.php");
 
 } else {
 
@@ -85,7 +86,7 @@ if ($errorCount > 0) {
     
     // Save appointment details to database
     file_put_contents("../db/appointments/". $student_name . $appointment_date .".json", json_encode($appointmentObject));
-    $_SESSION['message'] = "Appointment booking complete.";
+    set_alert('message',"Appointment booking complete.");
     redirect_to("../dashboard_students.php");
     
 }

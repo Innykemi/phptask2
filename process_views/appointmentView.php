@@ -13,6 +13,7 @@
         $appointmentObject = json_decode($appointmentString);
         $departmentFromDB = $appointmentObject->department_booked;
         array_push($appointmentList, $appointmentObject);
+        
     }
 
 ?>

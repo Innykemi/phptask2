@@ -5,6 +5,8 @@
         header("location: login.php");
     }
     include ("lib/menu.php");
+    require_once('functions/alert.php');
+    require_once('functions/redirect.php');
 ?>
     <main role="main" class="container">
         <div class="my-5 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
@@ -12,14 +14,7 @@
             <p>Please enter email associated with this account</p>
             <form action="process/processforgot2.php" method="post">
                 <?php
-                    if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
-                        echo 
-                            "<div class='alert alert-danger' role='alert'>" 
-                                . $_SESSION['error'] . "<br/>"
-                                . $_SESSION["emailErr"] .
-                            "</div>";
-                        unset($_SESSION['error']);
-                    }
+                    print_alert();
                 ?>
                 <div class="form-item">
                     <label for="email">Email</label>

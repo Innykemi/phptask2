@@ -69,9 +69,14 @@ if ($errorCount > 0) {
     redirect_to("../register.php");
 
 } else {
+    if(!$email){
+        set_alert('error','User Email is not set');
+        die();
+    }
 
-    //count all users
-    $newUserID = ($countUsers+1) ;
+    $allUsers = customScandir("../db/users/"); 
+    $countAllUsers = count($allUsers);
+    $newUserID = ($countAllUsers + 1) ;
 
     //declare data to be submitted to database
     $userObject = [
@@ -85,18 +90,19 @@ if ($errorCount > 0) {
         'registration_date' => $registration_date
     ];
 
-    //check if the user exists
-    $userExists = find_user($email);
-        
-        if($userExists) {
+    for ($counter = 0; $counter < $countAllUsers ; $counter++) {
+        $currentUser = $allUsers[$counter];
+
+        if($currentUser == $email . ".json") {
             set_alert('error',"Registration failed, User already exists");
             redirect_to("../register.php");
             die();
-        }
+        }     
+        
+    }
 
     // Save user details to database
-    save_user($userObject);
-    
+    file_put_contents("../db/users/". $email .".json", json_encode($userObject));
     set_alert('message',"Registration Successful, you can now login " . $full_name);
     redirect_to("../login.php");
     

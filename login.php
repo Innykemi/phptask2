@@ -8,31 +8,14 @@
         header("location: dashboard.php");
     }
     include ("lib/menu.php");
+    require_once('functions/alert.php');
+    require_once('functions/redirect.php');
 ?>
     <main role="main" class="container">
         <div class="my-5 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
-            <?php
-                if (isset($_SESSION['message']) && !empty($_SESSION['message'])){
-                    echo 
-                        "<div class='alert alert-success' role='alert'>" 
-                            . $_SESSION["message"] .
-                        "</div>";
-                    unset($_SESSION['message']);
-                }
-            ?>
+            <?php print_alert();?>
             <h2>Login</h2>
             <form action="process/processlogin.php" method="post">
-                <?php
-                    if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
-                        echo 
-                            "<div class='alert alert-danger' role='alert'>" 
-                                . $_SESSION['error'] . "<br/>"
-                                . $_SESSION["emailErr"] .
-                            "</div>";
-                        unset($_SESSION['error']);
-                        unset($_SESSION['emailErr']);
-                    }
-                ?>
                 <div class="form-item">
                     <label for="email">Email</label>
                     <input 

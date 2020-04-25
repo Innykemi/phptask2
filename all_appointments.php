@@ -1,5 +1,5 @@
 <?php include ("lib/header.php");
-    if (isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Super Admin' || empty($_SESSION['loggedin'])) {
+    if (is_user_loggedIn() && $_SESSION['designation'] != 'Super Admin' || empty($_SESSION['loggedin'])) {
         header("location: login.php");
     }
     include ("lib/menu.php");

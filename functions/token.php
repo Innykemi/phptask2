@@ -13,7 +13,7 @@ function generate_token(){
 
 function find_token($email = ''){
     
-    $allUserTokens = scandir("../db/tokens/"); //return @array (2 filled)
+    $allUserTokens = scandir("../db/tokens/"); 
     $countAllUserTokens = count($allUserTokens);
 
     for ($counter = 0; $counter < $countAllUserTokens ; $counter++) {    

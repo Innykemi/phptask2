@@ -5,21 +5,16 @@
         header("location: login.php");
     }
     include_once ("lib/menu.php");
+    require_once('functions/alert.php');
+    require_once('functions/redirect.php');
 ?>
     <main role="main" class="container">
         <div class="my-4 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
             <h2>Book Appointment</h2>      
             <form action="process/process_appointment.php" method="post">
                 <?php
-                    if (isset($_SESSION['error']) && !empty($_SESSION['error'])){
-                        echo 
-                            "<div class='alert alert-danger' role='alert'>" 
-                                . $_SESSION['error'] . "<br/>"
-                                . $_SESSION["complaintErr"] . "<br/>"
-                                . $_SESSION["deptErr"] .
-                            "</div>";
-                        session_destroy();
-                    }
+                    print_alert();
+                    //unset_session();
                 ?>
                 <div class="form-item">
                     <label for="appointment_date">Date of Appointment</label>

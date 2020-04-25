@@ -37,13 +37,13 @@ if ($errorCount > 0) {
     }
 
     // Display error message
-    $error_message = "You have " . $errorCount . " error";
-    if ($errorCount > 1){
-        $error_message .= "s";
+    $session_error = "You have " . $errorCount . " error";
+    if($errorCount > 1) {        
+        $session_error .= "s";
     }
-    $error_message .= " in your form submission";
-    $_SESSION["error"] = $error_message;
-    header("location: ../forgot.php");
+    $session_error .=   " in your form submission";
+    set_alert('error',$session_error);
+    redirect_to("../forgot.php");
 
 } else {
     //count all users

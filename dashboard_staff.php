@@ -5,13 +5,23 @@ include ("lib/header.php");
         header("location: login.php");
     }
 include ("lib/menu.php");
-
+require_once('functions/alert.php');
+require_once('functions/redirect.php');
 ?>
     <main role="main">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 mt-5 row">
-                    <div class="col-md-5" col-12>
+                <div class="col-md-12">
+                    <div class="col-md-4 float-right mt-4 col-12">
+                        <?php
+                            print_alert();
+                            //unset_session();
+                        ?>
+                    </div>
+                    
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-5 col-12">
                         <h3 class="purple">Welcome <?php echo $_SESSION['full_name'];?></h3>
                         <p>You're logged in as a <strong><?php echo $_SESSION['designation'];?></strong>
                         </p>
