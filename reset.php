@@ -4,7 +4,7 @@
     require_once('functions/redirect.php');
     require_once('functions/user.php');
     
-    if(!is_user_loggedin() && is_token_set() || is_user_loggedin_empty()){
+    if(!is_user_loggedin() && !is_token_set()){
         $_SESSION["error"] = "You are not authorized to view that page";
         $_SESSION["emailErr"] = "";
         header("Location: login.php");

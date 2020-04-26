@@ -16,7 +16,7 @@ function is_user_loggedin_empty(){
 }
 
 function is_token_set(){
-    return is_token_set_in_get() && is_token_set_in_session();
+    return is_token_set_in_get() || is_token_set_in_session();
 }
 
 function is_token_set_in_session(){
