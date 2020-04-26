@@ -1,12 +1,13 @@
 <?php include_once ("lib/header.php");
-    if(isset($_SESSION['loggedin'])){
-        //redirect to dashboard
-        header("location: login.php");
-    }
-    //session_destroy();
     include_once ("lib/menu.php");
     require_once('functions/alert.php');
     require_once('functions/redirect.php');
+    require_once('functions/user.php');
+
+    if(is_user_loggedin()){
+        //redirect to dashboard
+        header("location: login.php");
+    }
 ?>
     <main role="main" class="container">
         <div class="my-4 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">

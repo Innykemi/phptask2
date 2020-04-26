@@ -1,15 +1,18 @@
-<?php include ("lib/header.php");
-    //redirect to users dashboard with regard to designation
-    if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Student'){
-        header("location: dashboard_students.php");
-    } elseif (isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Staff') {
-        header("location: dashboard_staff.php");
-    } elseif (isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin']) && $_SESSION['designation'] == 'Super Admin') {
-        header("location: dashboard.php");
-    }
-    include ("lib/menu.php");
-    require_once('functions/alert.php');
-    require_once('functions/redirect.php');
+<?php 
+include ("lib/header.php");
+include ("lib/menu.php");
+require_once('functions/alert.php');
+require_once('functions/redirect.php');
+require_once('functions/user.php');
+
+//redirect to users dashboard with regard to designation
+if(is_user_loggedin() && !is_user_loggedin_empty() && is_user_student()){
+    header("location: dashboard_students.php");
+} elseif (is_user_loggedin() && !is_user_loggedin_empty() && is_user_staff()) {
+    header("location: dashboard_staff.php");
+} elseif (is_user_loggedin() && !is_user_loggedin_empty() && is_user_superadmin()) {
+    header("location: dashboard.php");
+}
 ?>
     <main role="main" class="container">
         <div class="my-5 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">

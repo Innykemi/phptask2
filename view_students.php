@@ -1,9 +1,11 @@
 <?php include ("lib/header.php");
-    if (isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Super Admin' || empty($_SESSION['loggedin'])) {
-        header("location: login.php");
-    }
     include ("lib/menu.php");
     include ("process_views/studentsView.php");
+    require_once('functions/user.php');
+
+    if (is_user_loggedin() && !is_user_superadmin() || is_user_loggedin_empty()) {
+        header("location: login.php");
+    }
 ?>
     <main role="main">
         <div class="container">

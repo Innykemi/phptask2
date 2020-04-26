@@ -1,11 +1,14 @@
 <?php
 include ("lib/header.php");
-    if (isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Student' || empty($_SESSION['loggedin'])) {
-        header("location: login.php");
-    }
 include ("lib/menu.php");
 require_once('functions/alert.php');
 require_once('functions/redirect.php');
+require_once('functions/user.php');
+
+//redirect to login page if user designation is not "Staff" or user hasn't logged in
+if (is_user_loggedin() && !is_user_student() || is_user_loggedin_empty()) {
+    header("location: login.php");
+}
 ?>
     <main role="main">
         <div class="container">

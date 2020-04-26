@@ -1,11 +1,13 @@
 <?php 
 include_once ("lib/header.php");
-    if (isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Super Admin' || empty($_SESSION['loggedin'])) {
-        header("location: login.php");
-    }
     include_once ("lib/menu.php");
     require_once('functions/alert.php');
     require_once('functions/redirect.php');
+    require_once('functions/user.php');
+
+    if (is_user_loggedin() && !is_user_superadmin() || is_user_loggedin_empty()) {
+        header("location: login.php");
+    }
 ?>
     <main role="main" class="container">
         <div class="my-4 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
