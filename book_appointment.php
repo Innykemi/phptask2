@@ -1,12 +1,14 @@
 <?php include_once ("lib/header.php");
-    //redirect to login page if user designation is not "Student" or user hasn't logged in
-    if(isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Student' || empty($_SESSION['loggedin'])){
-        //redirect to dashboard
-        header("location: login.php");
-    }
     include_once ("lib/menu.php");
     require_once('functions/alert.php');
     require_once('functions/redirect.php');
+    require_once('functions/user.php');
+    
+    //redirect to login page if user designation is not "Student" or user hasn't logged in
+    if(is_user_loggedin() && !is_user_student() || is_user_loggedin_empty()){
+        //redirect to dashboard
+        header("location: login.php");
+    }
 ?>
     <main role="main" class="container">
         <div class="my-4 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">

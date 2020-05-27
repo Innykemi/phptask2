@@ -1,18 +1,20 @@
 <?php include ("lib/header.php");
-    //redirect to users dashboard with regard to designation
-    if(isset($_SESSION['loggedin'])){
-        //redirect to dashboard
-        header("location: login.php");
-    }
     include ("lib/menu.php");
     require_once('functions/alert.php');
     require_once('functions/redirect.php');
+    require_once('functions/user.php');
+
+    //redirect to users dashboard with regard to designation
+    if(is_user_loggedin()){
+        //redirect to dashboard
+        header("location: login.php");
+    }
 ?>
     <main role="main" class="container">
         <div class="my-5 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
             <h2>Forgot Password</h2>
             <p>Please enter email associated with this account</p>
-            <form action="process/processforgot2.php" method="post">
+            <form action="process/processforgot.php" method="post">
                 <?php
                     print_alert();
                 ?>

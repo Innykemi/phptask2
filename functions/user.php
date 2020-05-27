@@ -1,17 +1,22 @@
 <?php include_once('alert.php');
 include_once('scandir.php');
 
-$_SESSION['loggedIn'] = "";
-function is_user_loggedIn(){
+function is_user_loggedin(){
+    if(isset($_SESSION['loggedin'])) {
+        return true;
+    }
+    return false;
+}
 
-    if($_SESSION['loggedIn'] && !empty($_SESSION['loggedIn'])) {
+function is_user_loggedin_empty(){
+    if(empty($_SESSION['loggedin'])) {
         return true;
     }
     return false;
 }
 
 function is_token_set(){
-    return is_token_set_in_get() && is_token_set_in_session();
+    return is_token_set_in_get() || is_token_set_in_session();
 }
 
 function is_token_set_in_session(){
@@ -20,6 +25,27 @@ function is_token_set_in_session(){
 
 function is_token_set_in_get(){
     return isset($_GET['token']); 
+}
+
+function is_user_staff(){
+    if($_SESSION['designation'] == 'Staff') {
+        return true;
+    }
+    return false;
+}
+
+function is_user_student(){
+    if($_SESSION['designation'] == 'Student') {
+        return true;
+    }
+    return false;
+}
+
+function is_user_superadmin(){
+    if($_SESSION['designation'] == 'Super Admin') {
+        return true;
+    }
+    return false;
 }
 
 function find_user($email = ""){
