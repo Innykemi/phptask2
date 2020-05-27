@@ -1,21 +1,22 @@
-<?php include_once ("lib/header.php");
-    if(isset($_SESSION['loggedin'])){
-        //redirect to dashboard
+<?php 
+include_once ("lib/header.php");
+    if (isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Super Admin' || empty($_SESSION['loggedin'])) {
         header("location: login.php");
     }
-    //session_destroy();
     include_once ("lib/menu.php");
     require_once('functions/alert.php');
     require_once('functions/redirect.php');
 ?>
     <main role="main" class="container">
         <div class="my-4 p-3 px-4 max-width-35 mx-auto bg-white rounded shadow-sm">
-            <h2>Register</h2>
-            <form action="process/processregister.php" method="post">
-                <?php
-                    print_alert();
-                    //unset_session();
-                ?>
+            <h2>Register</h2>      
+            <form action="process/processregister_admin.php" method="post">
+                <p>
+                    <?php
+                        print_alert();
+                        //unset_session();
+                    ?>
+                </p>
                 <div class="form-item">
                     <label for="full_name">Full Name</label>
                     <input

@@ -1,6 +1,7 @@
 <?php
 include ("lib/header.php");
-    if (isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Student' || empty($_SESSION['loggedin'])) {
+    //redirect to login page if user designation is not "Staff" or user hasn't logged in
+    if (isset($_SESSION['loggedin']) && $_SESSION['designation'] != 'Staff' || empty($_SESSION['loggedin'])) {
         header("location: login.php");
     }
 include ("lib/menu.php");
@@ -24,8 +25,7 @@ require_once('functions/redirect.php');
                         <h3 class="purple">Welcome <?php echo $_SESSION['full_name'];?></h3>
                         <p>You're logged in as a <strong><?php echo $_SESSION['designation'];?></strong>
                         </p>
-                        <a href="paybill.php" style="margin-right: 1em;"><button>Pay Bill</button></a>
-                        <a href="book_appointment.php"><button>Book Appointment</button></a>
+                        <a href="view_appointment.php"><button>View Appointments</button></a>
                     </div>
                     <div class="col-md-7 col-12 row">
                         <div class="col-md-4">
